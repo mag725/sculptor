@@ -1,0 +1,30 @@
+Sculptor.define do
+
+collection :products
+collection.with(:products).called(:prod_list)
+
+object :feed do
+
+	needs string.called(:next_page)
+	needs array.of(:products).called(:name)
+
+end
+
+object :product do
+
+	has string.called(:name)
+	needs int.from(1).to(5).called(:rank)
+	needs array.of( :images ).called(:images)
+	has non_nil.array.of( :variants ).called( :variants )
+	
+end
+
+object :image do
+
+	has non_nil.string.called( :url )
+	has array.from(10).to(100).with.object(:account).called(:owners)
+	has string
+	
+end
+
+end
