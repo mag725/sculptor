@@ -7,8 +7,6 @@ describe 'sculptor' do
     before( :each ) do
 
       @objects = {}
-      @block = Proc.new do
-      end
       @objects.stub!( :[] ).with( :product ).and_return( @sculpture )
 
     end
@@ -20,13 +18,16 @@ describe 'sculptor' do
         end
       end
 
-      Sculptor.sculpture_named( :product ).should eq( an_instance_of( Sculpture ) )
+      Sculptor.sculpture_named( :product ).class.should be( Sculpture )
 
     end
 
     it "should execute the block" do
       
+      @block = Proc.new do
+      end
       @block.should_receive( :instance_eval )
+      Sculpture.stub!( :new ).and_return( @block )
       Sculptor.define do
         object :product do
         end

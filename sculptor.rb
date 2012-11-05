@@ -15,7 +15,7 @@ module Sculptor
   end
   
   def self.object( name, &block )
-    @_sculpture_objects[name] = Sculpture.new.instance_eval( &block )
+    @_sculpture_objects[name] = s = Sculpture.new and s.instance_eval( &block ) and s
   end
    
   def collection( name, &block )
