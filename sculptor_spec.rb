@@ -18,7 +18,7 @@ describe 'sculptor' do
         end
       end
 
-      Sculptor.sculpture_named( :product ).class.should be( Sculpture )
+      Sculptor.sculpt( :product ).class.should be( Sculpture )
 
     end
 
@@ -36,16 +36,33 @@ describe 'sculptor' do
     end
   end
   
-  describe 'object' do
-    
-  end
-  
   describe 'collection' do
   
   end
     
   describe 'sculpt' do
+
+    before( :each ) do
+      Sculptor.define do
+        object :product do
+        end
+      end
+    end
     
+    it "should return an instance of sculpture" do
+
+      Sculptor.sculpt( :product ).class.should be( Sculpture )
+
+    end
+
+    it "should raise an error for unregistered sculptures" do
+
+      expect{
+        Sculpture.sculpt( :fake )
+      }.to raise_error
+
+    end
+
   end
     
 end
