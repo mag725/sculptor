@@ -3,18 +3,35 @@ require_relative 'spec_helper'
 describe 'sculptor' do
   
   describe 'define' do
-    before( :all ) do
-      Sculptor.define do
-        object :product do
-          puts 'test'
-        end
+
+    before( :each ) do
+
+      @objects = {}
+      @block = Proc.new do
       end
+      @objects.stub!( :[] ).with( :product ).and_return( @sculpture )
+
     end
 
-    it "create object with name" do
+    it "should store store sculpture in @_sculpture_objects" do
+
+      Sculptor.define do
+        object :product do
+        end
+      end
+
+      Sculptor.sculpture_named( :product ).should eq( an_instance_of( Sculpture ) )
+
+    end
+
+    it "should execute the block" do
       
-      @_sculpture_objects[:product].should_not be_nil
-      
+      @block.should_receive( :instance_eval )
+      Sculptor.define do
+        object :product do
+        end
+      end
+
     end
   end
   

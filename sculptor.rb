@@ -6,6 +6,10 @@ module Sculptor
   @_sculpture_objects = {}
   @_sculpture_collections = {}
 
+  def self.sculpture_named( name )
+    @_sculpture_objects[name]
+  end
+
   def self.define( &block )
     self.module_eval( &block )
   end
