@@ -6,8 +6,8 @@ module Sculptor
   @_sculpture_objects = {}
   @_sculpture_collections = {}
 
-  def self.sculpture_named( name )
-    @_sculpture_objects[name]
+  def self.sculpt( name )
+    @_sculpture_objects[ name ] or raise "Sculpture '#{name}' not registered." 
   end
 
   def self.define( &block )
@@ -15,18 +15,15 @@ module Sculptor
   end
   
   def self.object( name, &block )
-    @_sculpture_objects[name] = Sculpture.new.instance_eval( &block )
+    s = Sculpture::Hash.new
+    s.instance_eval( &block )
+    @_sculpture_objects[ name ] = s
   end
    
-  def collection( name, &block )
-    @_sculpture_collections[name] = Sculpture.new.instance_eval( &block )
+  def self.collection( name, &block )
+    s = Sculpture::Array.new
+    s.instance_eval( &block )
+    @_sculpture_objects[ name ] = s
   end
-  
-  def sculpt( name )
-    
-    s = @_sculpture_objects[name] or raise "Sculpture '#{name}' not registered."
-    instance_eval( s )
-    
-  end   
       
 end

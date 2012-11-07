@@ -13,30 +13,40 @@ describe 'sculptor' do
 
     end
 
-    it "should store store sculpture in @_sculpture_objects" do
+    it "should evaluate the block" do
 
+      Sculptor.should_receive( :module_eval )
       Sculptor.define do
-        object :product do
-        end
-      end
-
-      Sculptor.sculpture_named( :product ).should eq( an_instance_of( Sculpture ) )
-
-    end
-
-    it "should execute the block" do
-      
-      @block.should_receive( :instance_eval )
-      Sculptor.define do
-        object :product do
-        end
       end
 
     end
+
   end
   
   describe 'object' do
     
+    before( :each ) do
+
+      @objects = {}
+      @block = Proc.new do
+      end
+      @objects.stub!( :[] ).with( :product ).and_return( @sculpture )
+
+    end
+
+    it "should execute the block" do
+
+      s = Sculpture.new      
+      s.should_receive( :instance_eval )
+
+      Sculpture.stub!( :new ).and_return( s )
+      Sculptor.define do
+        object :product do
+        end
+      end
+
+    end
+
   end
   
   describe 'collection' do
@@ -45,6 +55,27 @@ describe 'sculptor' do
     
   describe 'sculpt' do
     
+    before( :each ) do
+      Sculptor.define do
+        object :product do
+        end
+      end
+    end
+
+    it "should error out on unregistered sculpture" do
+
+      expect{
+        Sculptor.sculpt( :fake )
+      }.to raise_error
+
+    end
+
+    it "should return sculpture" do
+
+      Sculptor.sculpt( :product ).class.should be( Sculpture )
+
+    end
+ 
   end
     
 end
