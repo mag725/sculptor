@@ -11,15 +11,6 @@ class Hash < Sclupture
 
   end
 
-  def with
-
-  end
-
-  def non_empty
-  	@_non_empty = true
-  	self
-  end
-
   def needs( sculpture )
     @_required_sub_sculptures[ sculpture.name ] = sculpture
     self

@@ -14,7 +14,7 @@ module Sculptor
     self.module_eval( &block )
   end
   
-  def self.object( name, &block )
+  def self.sculpture( name, &block )
     s = Sculpture::Hash.new
     s.instance_eval( &block )
     @_sculpture_objects[ name ] = s

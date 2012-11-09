@@ -23,7 +23,7 @@ describe 'sculptor' do
 
   end
   
-  describe 'object' do
+  describe 'sculpture' do
     
     before( :each ) do
 
@@ -41,7 +41,7 @@ describe 'sculptor' do
 
       Sculpture.stub!( :new ).and_return( s )
       Sculptor.define do
-        object :product do
+        sculpture :product do
         end
       end
 
@@ -57,7 +57,7 @@ describe 'sculptor' do
     
     before( :each ) do
       Sculptor.define do
-        object :product do
+        sculpture :product do
         end
       end
     end
