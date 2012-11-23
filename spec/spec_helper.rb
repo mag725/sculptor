@@ -1,3 +1,3 @@
 require 'rspec'
-require_relative 'sculptor'
+require_relative '../sculptor'
 include Sculptor

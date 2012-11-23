@@ -20,6 +20,10 @@ class Part
   def name
     @_name
   end
+
+  def non_nil?
+    @_non_nil?
+  end
   
   #
   #  instance methods

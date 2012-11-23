@@ -1,7 +1,7 @@
 require 'sculpture'
 require 'sculptor'
 
-class Array < Part
+class Array < Sculpture
   
   def initialize
     
@@ -24,7 +24,11 @@ class Array < Part
   end
   
   def of( name )
-    @_name = name
+    self
+  end
+
+  def sculpture( s_name )
+    @_of = Sculptor.sculpt s_name
     self
   end
 
@@ -33,22 +37,23 @@ class Array < Part
     self
   end
   
-  def compare!( value )
+  def compare!( json_string )
     
+    json = JSON.parse( json_string )
+
     # check data type
-    unless value.class.name == self.class.name
-      raise "#{Invalid data type '#{value.class.name}' for node '#{@_name}'. Expecting '#{self.class.name}'}."
-    end
+    raise "#{Invalid data type '#{ json.class.name }' for node '#{ @_name }'. Expecting 'Array'}." unless json.class == Array
     
-    raise "Array '#{@_name}' count #{value.count} under minimum of #{@_from}"
-    raise "Array '#{@_name}' count #{value.count} exceeds maximum of #{@_to}"
-    raise "Array is '#{@_name}' empty when it shouldn't be"
+    raise "Array '#{@_name}' count #{value.count} under minimum of #{@_from}" if json.count < @_min
+
+    raise "Array '#{@_name}' count #{value.count} exceeds maximum of #{@_to}" if json.count > @_max
+
+    raise "Array is '#{@_name}' empty when it shouldn't be" if json.empty?
     
     # check any elements of the array if sculpture provided
     if @_of
-      sculputed_object = sculpt( @_of )
       value.each{ |json_object| 
-        sculputed_object.compare! json_object 
+        @_of.compare! json_object 
       }
     end
 
