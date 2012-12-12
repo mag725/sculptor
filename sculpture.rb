@@ -1,6 +1,5 @@
 require 'json'
 
-
 class Sculpture
 
   def initialize( opts={} )

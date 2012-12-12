@@ -1,0 +1,5 @@
+require_relative 'generators/generator'
+require_relative 'generators/array'
+require_relative 'generators/hash'
+require_relative 'generators/integer'
+require_relative 'generators/string'

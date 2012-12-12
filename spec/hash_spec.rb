@@ -19,7 +19,32 @@ describe Sculpture::Hash do
 	end
 
 	describe 'compare!' do
-		it "should "
+		
+		before( :each ) do
+
+		end
+
+		it "should error when missing required key" do
+
+		end
+
+		it "should error regarding each missing required key" do
+
+		end
+
+		it "should error when extranneous keys are provided" do
+
+		end
+
+		it "should error when non-nil requirement is not met for required key" do
+
+		end
+
+		it "should error when non-nil requirement is not met for optional key" do
+
+		end
+
+		it "should error when "
 	end
 
 end

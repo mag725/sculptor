@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'sculptor' do
+describe Sculptor do
   
   describe 'define' do
 
@@ -27,31 +27,30 @@ describe 'sculptor' do
     
     before( :each ) do
 
-      @objects = {}
-      @block = Proc.new do
-      end
-      @objects.stub!( :[] ).with( :product ).and_return( @sculpture )
+      @generator = Sculptor::Generator::Hash.new
+      Sculptor::Generator::Hash.stub!( :new ).and_return( @generator )
 
     end
 
-    it "should execute the block" do
-
-      s = Sculpture.new      
-      s.should_receive( :instance_eval )
-
-      Sculpture.stub!( :new ).and_return( s )
+    it "should instantiate a new sculpture::generator::hash" do
+      Sculptor::Generator::Hash.should_receive( :new )
       Sculptor.define do
         sculpture :product do
         end
       end
+    end
 
+    it "should execute the block in context the generator instance" do
+      @generator.should_receive( :instance_eval )
+      Sculptor.define do
+        sculpture :product do
+        end
+      end
     end
 
   end
   
-  describe 'collection' do
-  
-  end
+  pending 'collection'
     
   describe 'sculpt' do
     
@@ -70,9 +69,9 @@ describe 'sculptor' do
 
     end
 
-    it "should return sculpture" do
+    it "should return sculpture::hash" do
 
-      Sculptor.sculpt( :product ).class.should be( Sculpture )
+      Sculptor.sculpt( :product ).should be_kind_of( Sculpture::Hash )
 
     end
  
